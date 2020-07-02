@@ -1,0 +1,23 @@
+{
+  "name": "linkorb/spark",
+  "description": "Spark: application instrumentation",
+  "homepage": "http://www.github.com/linkorb/spark",
+  "keywords": ["spark", "apm", "events", "exception tracking", "remote configuration", "event emitter", "linkorb"],
+  "type": "library",
+  "authors": [
+    {
+      "name": "Joost Faassen",
+      "email": "j.faassen@linkorb.com",
+      "role": "Development"
+    }
+  ],
+  "require": {
+    "php": ">=7.2.0"
+  },
+  "autoload": {
+    "psr-4": {
+        "Spark\\": "src/"
+    }
+  },
+  "license": "MIT"
+}
