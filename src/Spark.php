@@ -53,7 +53,7 @@ class Spark
             }
 
             self::$instance = new self($guzzle, $reporter);
-            self::$instance->whitelist = explode(',', getenv('SPARK_REPORT_WHITELIST'));
+            self::$instance->whitelist = array_filter(explode(',', getenv('SPARK_REPORT_WHITELIST')));
         }
         return self::$instance;
     }
@@ -90,7 +90,10 @@ class Spark
     {
         if ($this->reporter) {
             $data = $this->transaction->serialize();
-            $this->applyWhitelist('', $data, $this->whitelist);
+            if (count($this->whitelist)>0) {
+                print_r($this->whitelist);
+                $this->applyWhitelist('', $data, $this->whitelist);
+            }
             $this->reporter->report($data);
         }
     }
