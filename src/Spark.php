@@ -94,6 +94,7 @@ class Spark
                 print_r($this->whitelist);
                 $this->applyWhitelist('', $data, $this->whitelist);
             }
+            $this->redact($data);
             $this->reporter->report($data);
         }
     }
@@ -122,5 +123,51 @@ class Spark
         }
     }
 
+    protected function redact(array &$data)
+    {
+        $ink = '*****';
+        $blacklist = [
+            'secret',
+            'key',
+            'pass',
+            'token',
+            'cookie',
+            'sess',
+        ];
+        foreach ($data as $k=>$v) {
+            if (is_string($v)) {
+
+                // Redact credentials from url
+                if (filter_var($v, FILTER_VALIDATE_URL)) {
+                    $part = parse_url($v);
+                    $v = $part['scheme'] . '://';
+                    if (isset($part['user'])) {
+                        $v .= $ink . ':' . $ink . '@';
+                    }
+                    $v .= $part['host'] ;
+                    $v .= $part['path'] ?? null;
+                    if (isset($part['query'])) {
+                        $v .= '?' . $part['query'];
+                    }
+                    $data[$k] = $v;
+                }
+
+                // Redact blacklisted keywords in keys and values
+                foreach ($blacklist as $word) {
+                    if (strpos(strtolower($k), strtolower($word))!== false) {
+                        $data[$k] = $ink;
+                    }
+                    if (strpos(strtolower($v), strtolower($word))!== false) {
+                        $data[$k] = $ink;
+                    }
+                }
+            }
+
+
+            if (is_array($v)) {
+                $this->redact($data[$k]);
+            }
+        }
+    }
 
 }
