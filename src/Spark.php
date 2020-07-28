@@ -41,7 +41,7 @@ class Spark
                 ]);
 
                 if ($reporterName=='guzzle') {
-                    $reporter = new GuzzleReporter($guzzle, 'transactions');
+                    $reporter = new GuzzleReporter($guzzle, 'reports');
                 }
             }
 
