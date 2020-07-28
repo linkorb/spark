@@ -13,7 +13,7 @@ class LegacySparkEventDispatcher extends LegacyAbstractEventDispatcherDecorator
 
     public function dispatch($eventName, Event $event =  null): object
     {
-        if (is_a($event, SparkEvent::class)) {
+        if (is_a($event, LegacySparkEvent::class)) {
             $eventName = $event->getName();
         }
         $this->events[] = [

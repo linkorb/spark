@@ -3,6 +3,7 @@
 namespace Spark\EventDispatcher;
 
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Spark\LegacyEventDispatcher\LegacySparkEvent;
 use Spark\Spark;
 
 // Reusable trait for SparkEventDispatcher and LegacySparkEventDispatcherTrait
@@ -39,7 +40,7 @@ trait SparkEventDispatcherTrait
     protected function getEventPayload($event): array
     {
         $payload = [];
-        if (is_a($event, SparkEvent::class)) {
+        if (is_a($event, SparkEvent::class) || is_a($event, LegacySparkEvent::class)) {
             return $event->getPayload();
         }
         if (is_object($event)) {
