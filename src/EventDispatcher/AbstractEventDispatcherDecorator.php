@@ -9,68 +9,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 abstract class AbstractEventDispatcherDecorator implements EventDispatcherInterface
 {
-    protected $dispatcher;
-
-    public function __construct(EventDispatcherInterface $dispatcher)
-    {
-        $this->dispatcher = $dispatcher;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function addListener($eventName, $listener, $priority = 0)
-    {
-        $this->dispatcher->addListener($eventName, $listener, $priority);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function addSubscriber(EventSubscriberInterface $subscriber)
-    {
-        $this->dispatcher->addSubscriber($subscriber);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function removeListener($eventName, $listener)
-    {
-        return $this->dispatcher->removeListener($eventName, $listener);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function removeSubscriber(EventSubscriberInterface $subscriber)
-    {
-        return $this->dispatcher->removeSubscriber($subscriber);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getListeners($eventName = null)
-    {
-        return $this->dispatcher->getListeners($eventName);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getListenerPriority(string $eventName, $listener)
-    {
-        return $this->dispatcher->getListenerPriority($eventName, $listener);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function hasListeners($eventName = null)
-    {
-        return $this->dispatcher->hasListeners($eventName);
-    }
+    use AbstractEventDispatcherDecoratorTrait;
 
     /**
      * {@inheritdoc}

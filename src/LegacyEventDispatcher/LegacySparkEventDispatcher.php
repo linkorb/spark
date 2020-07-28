@@ -1,15 +1,17 @@
 <?php
 
-namespace Spark\EventDispatcher;
+namespace Spark\LegacyEventDispatcher;
 
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\EventDispatcher\Event;
 use Spark\Spark;
+use Spark\EventDispatcher\SparkEventDispatcherTrait;
 
-class SparkEventDispatcher extends AbstractEventDispatcherDecorator
+class LegacySparkEventDispatcher extends LegacyAbstractEventDispatcherDecorator
 {
     use SparkEventDispatcherTrait;
 
-    public function dispatch(object $event, ?string $eventName = NULL): object
+    public function dispatch($eventName, Event $event =  null): object
     {
         if (is_a($event, SparkEvent::class)) {
             $eventName = $event->getName();
@@ -20,6 +22,6 @@ class SparkEventDispatcher extends AbstractEventDispatcherDecorator
             microtime(true)
         ];
 
-        return parent::dispatch($event, $eventName);
+        return parent::dispatch($eventName, $event);
     }
 }
