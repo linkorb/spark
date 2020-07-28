@@ -133,6 +133,10 @@ class Spark
             'token',
             'cookie',
             'sess',
+            'authorization',
+            'auth-pw',
+            'auth_pw',
+            'cookie',
         ];
         foreach ($data as $k=>$v) {
             if (is_string($v)) {
@@ -152,17 +156,25 @@ class Spark
                     $data[$k] = $v;
                 }
 
-                // Redact blacklisted keywords in keys and values
+                // Redact blacklisted keywords in values
                 foreach ($blacklist as $word) {
-                    if (strpos(strtolower($k), strtolower($word))!== false) {
-                        $data[$k] = $ink;
-                    }
                     if (strpos(strtolower($v), strtolower($word))!== false) {
                         $data[$k] = $ink;
                     }
                 }
             }
 
+            // Redact blacklisted keywords in keys
+            foreach ($blacklist as $word) {
+                if (strpos(strtolower($k), strtolower($word))!== false) {
+                    if (is_array($v)) {
+                        $v = [$ink];
+                    } else {
+                        $v = $ink;
+                    }
+                    $data[$k] = $v;
+                }
+            }
 
             if (is_array($v)) {
                 $this->redact($data[$k]);
