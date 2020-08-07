@@ -30,7 +30,7 @@ class Spark
                 $username = parse_url($dsn, PHP_URL_USER);
                 $password = parse_url($dsn, PHP_URL_PASS);
 
-                $url = $scheme . '://' . $host . '/api/v1/services/' . $username . '/';
+                $url = $scheme . '://' . $host . '/api/v1/streams/' . $username . '/';
 
                 $guzzle = new GuzzleClient([
                     // Base URI is used with relative requests
@@ -41,7 +41,7 @@ class Spark
                 ]);
 
                 if ($reporterName=='guzzle') {
-                    $reporter = new GuzzleReporter($guzzle, 'reports');
+                    $reporter = new GuzzleReporter($guzzle, 'events');
                 }
             }
 
@@ -148,7 +148,7 @@ class Spark
                     if (isset($part['user'])) {
                         $v .= $ink . ':' . $ink . '@';
                     }
-                    $v .= $part['host'] ;
+                    $v .= $part['host'] ?? null;
                     $v .= $part['path'] ?? null;
                     if (isset($part['query'])) {
                         $v .= '?' . $part['query'];
