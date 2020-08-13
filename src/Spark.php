@@ -30,7 +30,7 @@ class Spark
                 $username = parse_url($dsn, PHP_URL_USER);
                 $password = parse_url($dsn, PHP_URL_PASS);
 
-                $url = $scheme . '://' . $host . '/api/v1/streams/' . $username . '/';
+                $url = $scheme . '://' . $host . '/ingress/v1/streams/' . $username . '/';
 
                 $guzzle = new GuzzleClient([
                     // Base URI is used with relative requests
