@@ -2,20 +2,17 @@
 
 namespace Spark\EventDispatcher;
 
-use Symfony\Component\EventDispatcher\EventDispatcher;
-use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Spark\Spark;
 
-abstract class AbstractEventDispatcherDecorator implements EventDispatcherInterface
+class SparkEventDispatcherV5 implements EventDispatcherInterface
 {
+    use SparkEventDispatcherTrait;
     use AbstractEventDispatcherDecoratorTrait;
 
-    /**
-     * {@inheritdoc}
-     */
     public function dispatch(object $event, ?string $eventName = NULL): object
     {
+        $this->internalDispatch($event, $eventName);
         return $this->dispatcher->dispatch($event, $eventName);
     }
 }

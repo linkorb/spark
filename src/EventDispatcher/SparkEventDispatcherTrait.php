@@ -6,7 +6,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Spark\LegacyEventDispatcher\LegacySparkEvent;
 use Spark\Spark;
 
-// Reusable trait for SparkEventDispatcher and LegacySparkEventDispatcherTrait
+// Reusable trait for SparkEventDispatchers for different symfony versions
 trait SparkEventDispatcherTrait
 {
 
@@ -21,7 +21,7 @@ trait SparkEventDispatcherTrait
     {
         $this->transaction = $spark->getTransaction();
         $this->transaction->registerCollector($this);
-        parent::__construct($dispatcher);
+        $this->dispatcher = $dispatcher;
     }
 
     public function getData(): array
@@ -49,5 +49,17 @@ trait SparkEventDispatcherTrait
             }
         }
         return $payload;
+    }
+
+    protected function internalDispatch(object $event, $eventName = null): void
+    {
+        if (is_a($event, LegacySparkEvent::class)) {
+            $eventName = $event->getName();
+        }
+        $this->events[] = [
+            $event,
+            $eventName,
+            microtime(true)
+        ];
     }
 }

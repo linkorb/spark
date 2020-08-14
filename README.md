@@ -61,7 +61,6 @@ Install Spark in your project:
 
 In `services.yaml` register Spark with the following configuration lines:
 
-
 ```yaml
 services:
     # Register a Spark instance
@@ -69,8 +68,9 @@ services:
         public: true
         factory: ['Spark\Spark', 'getInstance']
 
-    # Capture EventDispatcher event data
-    Spark\EventDispatcher\SparkEventDispatcher:
+    # Decorate the Symfony EventDispatcher to capture event data
+    # Be sure to select the dispatcher that matches your version of the event dispatcher
+    Spark\EventDispatcher\SparkEventDispatcherV5:
         decorates: 'event_dispatcher'
 
     # Capture PSR-3 Log data
@@ -81,12 +81,20 @@ services:
     Spark\Doctrine\SparkDoctrineEventSubscriber:
         tags:
             - { name: doctrine.event_subscriber, connection: default }
+    Spark\Doctrine\SparkSQLLogger:
+        public: true
 
     # Register Event Subscriber to automatically report data on
     # kernel.terminate and capture kernel.exception data
     Spark\EventSubscriber\SparkEventSubscriber:
         public: true
+
+
 ```
+
+Since Symfony's EventDispatcher method signatures have change throughout versions, multiple decorators for V3, V4 and V5 are available.
+
+Please refer to src/EventDispatcher/README.md for details
 
 ### Other frameworks / libraries
 

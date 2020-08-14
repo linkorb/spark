@@ -11,13 +11,6 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 // Reusable trait for AbstractEventDispatcherDecorator and LegacyAbstractEventDispatcherDecorator
 trait AbstractEventDispatcherDecoratorTrait
 {
-    protected $dispatcher;
-
-    public function __construct(EventDispatcherInterface $dispatcher)
-    {
-        $this->dispatcher = $dispatcher;
-    }
-
     /**
     * {@inheritDoc}
     */
@@ -61,7 +54,7 @@ trait AbstractEventDispatcherDecoratorTrait
     /**
     * {@inheritdoc}
     */
-    public function getListenerPriority(string $eventName, $listener)
+    public function getListenerPriority($eventName, $listener)
     {
         return $this->dispatcher->getListenerPriority($eventName, $listener);
     }

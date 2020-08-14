@@ -1,10 +1,10 @@
 <?php
 
-namespace Spark\LegacyEventDispatcher;
+namespace Spark\EventDispatcher;
 
 use Symfony\Component\EventDispatcher\Event;
 
-class LegacySparkEvent extends Event
+class SparkEventV3 extends Event
 {
     protected $name;
     protected $payload;
