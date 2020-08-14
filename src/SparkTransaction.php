@@ -16,6 +16,9 @@ class SparkTransaction
     protected $collectors = [];
     protected $requestStack;
     protected $exceptions = [];
+    protected $httpRequest;
+    protected $httpResponse;
+
 
     public function __construct(string $id, float $startStamp)
     {
