@@ -131,6 +131,7 @@ class Spark
             'key',
             'pass',
             'token',
+            'salt',
             'cookie',
             'sess',
             'authorization',
