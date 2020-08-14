@@ -49,7 +49,7 @@ class SparkTransaction
     {
         $endStamp = microtime(true);
         $data = [
-            'type' => 'transaction',
+            'type' => 'spark.transaction',
             'id' => $this->id,
             'start' => $this->startStamp,
             'end' => $endStamp,
